@@ -38,6 +38,7 @@ var templates_long = ["CvcvnoCvcvCvcv", "CvcvCvcvnoCvcv", "CvcvCvcvCvcvno", "Cvc
 var templates_maximum = ["anoxxxxxxxxxxxxxxxxx", "axxxxxxxxxxxxxxxxxno"];
 
 var masterKey = null;
+var masterKeyv3 = null;
 
 window.addEventListener('DOMContentLoaded', function () {
     var loginbtn = document.getElementById("login");
@@ -47,8 +48,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     var sitename = document.getElementById("sitename");
     sitename.addEventListener('input', getPW, false);
-    var counter = document.getElementById("counter");
-    counter.addEventListener('change', getPW, false);
+    $("#counter").on("change", getPW);
     var pwtype = document.getElementById("pwtype");
     pwtype.addEventListener('change', getPW, false);
 }, false);
@@ -56,32 +56,61 @@ window.addEventListener('DOMContentLoaded', function () {
 function login() {
     var passwordGen = document.getElementById("password-gen");
     passwordGen.setAttribute("disabled", "disabled");
-    var scrypt = scrypt_module_factory(Math.pow(2, 26));
+    document.getElementById("sitename").value = "";
+    document.getElementById("sitepw").value = "";
+    document.getElementById("sitepw2").value = "";
+    document.getElementById("sitepw3").value = "";
 
+    var scrypt = scrypt_module_factory(Math.pow(2, 26));
+    
     var masterName = document.getElementById("name").value;
     var masterPW = scrypt.encode_utf8(document.getElementById("pw").value);
+    
+    var N = 32768;
+    var r = 8;
+    var p = 2;
+    var l = 64;
 
     var masterSalt1 = scrypt.encode_utf8("com.lyndir.masterpassword");
     var masterSalt2 = intToByteArray(masterName.length);
     var masterSalt3 = scrypt.encode_utf8(masterName);
     var masterSalt = Uint8ArrayConcat(Uint8ArrayConcat(masterSalt1, masterSalt2), masterSalt3);
 
-    var N = 32768;
-    var r = 8;
-    var p = 2;
-    var l = 64;
-
     masterKey = scrypt.crypto_scrypt(masterPW, masterSalt, N, r, p, l);
-
     masterKey = scrypt.to_hex(masterKey);
+
+    var masterSalt2v3 = intToByteArray(stringLength(masterName));
+    var masterSaltv3 = Uint8ArrayConcat(Uint8ArrayConcat(masterSalt1, masterSalt2v3), masterSalt3);
+
+    masterKeyv3 = scrypt.crypto_scrypt(masterPW, masterSaltv3, N, r, p, l);
+    masterKeyv3 = scrypt.to_hex(masterKeyv3);
+
     passwordGen.removeAttribute("disabled");
+}
+
+function stringLength(str) {
+    var length = 0;
+    for (var i = 0; i < str.length; i++) {
+        length++;
+        if (str.charCodeAt(i) > 127) {
+            length++;
+            if (str.charCodeAt(i) > 2047) {
+                length++;
+            }
+        }
+    }
+    return length;
 }
 
 function logout() {
     document.getElementById("password-gen").setAttribute("disabled", "disabled");
     document.getElementById("sitepw").value = "";
+    document.getElementById("sitepw2").value = "";
+    document.getElementById("sitepw3").value = "";
     document.getElementById("sitename").value = "";
+    document.getElementById("pw").value = "";
     masterKey = null;
+    masterKeyv3 = null;
 }
 
 function getPW() {
@@ -98,16 +127,64 @@ function getPW() {
 
     var typepw = document.getElementById("pwtype");
     var type = typepw.options[typepw.selectedIndex].value;
-
     var templates = getTemplate(type);
     var template = templates[parseInt(siteSeed.substr(0, 2), 16) % templates.length];
-
     var sitePW = "";
     for (var i = 0; i < template.length; i++) {
         var passChars = getPassChars(template.charAt(i));
         sitePW += passChars[getI(siteSeed, i + 1) % passChars.length];
     }
     document.getElementById("sitepw").value = sitePW;
+    getPWv2();
+}
+
+function getPWv2() {
+    if (masterKey === null) {
+        return;
+    }
+
+    var site = document.getElementById("sitename").value;
+    var siteCounter = document.getElementById("counter").value;
+    var siteName = "com.lyndir.masterpassword" + intToHexString(stringLength(site)) + site + intToHexString(siteCounter);
+
+    var shaObj = new jsSHA(siteName, "TEXT");
+    var siteSeed = shaObj.getHMAC(masterKey, "HEX", "SHA-256", "HEX");
+
+    var typepw = document.getElementById("pwtype");
+    var type = typepw.options[typepw.selectedIndex].value;
+    var templates = getTemplate(type);
+    var template = templates[parseInt(siteSeed.substr(0, 2), 16) % templates.length];
+    var sitePW = "";
+    for (var i = 0; i < template.length; i++) {
+        var passChars = getPassChars(template.charAt(i));
+        sitePW += passChars[getI(siteSeed, i + 1) % passChars.length];
+    }
+    document.getElementById("sitepw2").value = sitePW;
+    getPWv3();
+}
+
+function getPWv3() {
+    if (masterKeyv3 === null) {
+        return;
+    }
+
+    var site = document.getElementById("sitename").value;
+    var siteCounter = document.getElementById("counter").value;
+    var siteName = "com.lyndir.masterpassword" + intToHexString(stringLength(site)) + site + intToHexString(siteCounter);
+
+    var shaObj = new jsSHA(siteName, "TEXT");
+    var siteSeed = shaObj.getHMAC(masterKeyv3, "HEX", "SHA-256", "HEX");
+    
+    var typepw = document.getElementById("pwtype");
+    var type = typepw.options[typepw.selectedIndex].value;
+    var templates = getTemplate(type);
+    var template = templates[parseInt(siteSeed.substr(0, 2), 16) % templates.length];
+    var sitePW = "";
+    for (var i = 0; i < template.length; i++) {
+        var passChars = getPassChars(template.charAt(i));
+        sitePW += passChars[getI(siteSeed, i + 1) % passChars.length];
+    }
+    document.getElementById("sitepw3").value = sitePW;
 }
 
 function getTemplate(type) {

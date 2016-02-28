@@ -1,7 +1,7 @@
 # MasterPasswordJS
 https://masterpasswordapp.com implementation in JavaScript.
 
-Currently it only supports the v1 algorithm.
+Currently supports the v1, v2 and v3 algorithm for Unicode characters from 0x0000 - 0xFFFF.
 
 ## License
 ```
@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISEDOF THE POSSIBILITY OF SUCH DAMAGE.
 [js-scrypt](https://github.com/tonyg/js-scrypt) is written by Tony Garnock-Jones
 <tonygarnockjones@gmail.com> and is licensed under the [2-clause BSD license](http://opensource.org/licenses/BSD-2-Clause):
 ```
-Copyright &copy; 2013, Tony Garnock-Jones  
+Copyright (c) 2013, Tony Garnock-Jones  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -140,7 +140,7 @@ v3.1.1
 
 A mobile and touch friendly input spinner component for Bootstrap 3.
 
-https://github.com/istvan-meszaros/bootstrap-touchspin
+https://github.com/istvan-ujjmeszaros/bootstrap-touchspin
 http://www.virtuosoft.eu/code/bootstrap-touchspin/
 
 ```
