@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2014,2016 ns130291
+ * 
+ * This file is part of MasterPasswordJS.
+ * 
+ * MasterPasswordJS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * MasterPasswordJS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 
 "use strict";
 
@@ -20,12 +39,14 @@ var templates_maximum = ["anoxxxxxxxxxxxxxxxxx", "axxxxxxxxxxxxxxxxxno"];
 
 var masterKey = null;
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
     var loginbtn = document.getElementById("login");
     loginbtn.addEventListener('click', login, false);
+    var logoutbtn = document.getElementById("logout");
+    logoutbtn.addEventListener("click", logout, false);
 
     var sitename = document.getElementById("sitename");
-    sitename.addEventListener('change', getPW, false);
+    sitename.addEventListener('input', getPW, false);
     var counter = document.getElementById("counter");
     counter.addEventListener('change', getPW, false);
     var pwtype = document.getElementById("pwtype");
@@ -33,8 +54,10 @@ window.addEventListener('DOMContentLoaded', function() {
 }, false);
 
 function login() {
+    var passwordGen = document.getElementById("password-gen");
+    passwordGen.setAttribute("disabled", "disabled");
     var scrypt = scrypt_module_factory(Math.pow(2, 26));
-    
+
     var masterName = document.getElementById("name").value;
     var masterPW = scrypt.encode_utf8(document.getElementById("pw").value);
 
@@ -51,11 +74,18 @@ function login() {
     masterKey = scrypt.crypto_scrypt(masterPW, masterSalt, N, r, p, l);
 
     masterKey = scrypt.to_hex(masterKey);
-    alert("logged in");
+    passwordGen.removeAttribute("disabled");
+}
+
+function logout() {
+    document.getElementById("password-gen").setAttribute("disabled", "disabled");
+    document.getElementById("sitepw").value = "";
+    document.getElementById("sitename").value = "";
+    masterKey = null;
 }
 
 function getPW() {
-    if (masterKey == null) {
+    if (masterKey === null) {
         return;
     }
 

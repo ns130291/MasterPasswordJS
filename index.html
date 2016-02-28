@@ -1,37 +1,118 @@
 <!DOCTYPE html>
-<html>
+<!--
+Copyright (C) 2014,2016 ns130291
+
+This file is part of MasterPasswordJS.
+ 
+MasterPasswordJS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MasterPasswordJS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html lang="en">
     <head>
-        <title>PW</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MasterPasswordJS</title>
+
         <script src="sha256.js"></script>
         <script src="scrypt.js"></script>
         <script src="masterpassword.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- bootstrap-touchspin -->
+        <link href="bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
-        <div>
-            <div><label for="name">Name</label><input id="name" name="name" type="text"></div>
-            <div><label for="pw">Password</label><input id="pw" name="pw" type="password"></div>
-            <div id="login">Login</div>
-        </div>
-        <div>
-            <div><label for="sitename">Site name</label><input id="sitename" name="sitename" type="text"></div>
-            <div>
-                <label for="counter">Counter</label>
-                <input id="counter" name="counter" type="number" min="1" step="1" value="1">
+        <div class="container">
+            <h1 class="col-sm-offset-2">MasterPasswordJS</h1>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="name" class="col-sm-4 control-label">Name</label>
+                    <div class="col-sm-6">
+                        <input id="name" class="form-control" name="name" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pw" class="col-sm-4 control-label">Masterpassword</label>
+                    <div class="col-sm-6">
+                        <input id="pw" class="form-control" name="pw" type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-6">
+                        <div id="login" class="btn btn-primary">Login</div>
+                    </div>
+                </div>
+
+                <fieldset id="password-gen" disabled>
+                    <div class="form-group">
+                        <label for="sitename" class="col-sm-4 control-label">Site name</label>
+                        <div class="col-sm-6">
+                            <input id="sitename" class="form-control" name="sitename" type="text"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="counter" class="col-sm-4 control-label">Counter</label>
+                        <div class="col-sm-6">
+                            <input id="counter" class="form-control" name="counter" type="text" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">                
+                        <label for="pwtype" class="col-sm-4 control-label">Password type</label>
+                        <div class="col-sm-6">
+                            <select id="pwtype" class="form-control" name="pwtype">
+                                <option value="pin">Pin</option>
+                                <option value="short">Short</option>
+                                <option value="basic">Basic</option>
+                                <option value="medium">Medium</option>
+                                <option value="long" selected="selected">Long</option>
+                                <option value="maximum">Maximum</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sitepw" class="col-sm-4 control-label">Site password</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="sitepw" name="sitepw" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-6">
+                            <div id="logout" class="btn btn-danger">Logout</div>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
-            <div>                
-                <label for="pwtype">Password type</label>
-                <select id="pwtype" name="pwtype">
-                    <option value="pin">Pin</option>
-                    <option value="short">Short</option>
-                    <option value="basic">Basic</option>
-                    <option value="medium">Medium</option>
-                    <option value="long" selected="selected">Long</option>
-                    <option value="maximum">Maximum</option>
-                </select>
-            </div>
-            <div><label for="sitepw">Site password</label><input type="text" id="sitepw" name="sitepw" readonly="readonly"></div>
         </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- bootstrap-touchspin -->
+        <script src="bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script>
+            $("input[name='counter']").TouchSpin({
+                min: 1,
+                step: 1,
+            });
+        </script>
     </body>
 </html>
