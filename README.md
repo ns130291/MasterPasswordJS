@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
-License for jsSHA (sha256.js)
+License for [jsSHA](https://github.com/Caligatio/jsSHA) (sha256.js)
 ```
 Copyright (c) 2008-2013, Brian Turek
 All rights reserved.
@@ -49,7 +49,7 @@ ANY THEORY OFLIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISEDOF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-js-scrypt is written by Tony Garnock-Jones
+[js-scrypt](https://github.com/tonyg/js-scrypt) is written by Tony Garnock-Jones
 <tonygarnockjones@gmail.com> and is licensed under the [2-clause BSD license](http://opensource.org/licenses/BSD-2-Clause):
 ```
 Copyright &copy; 2013, Tony Garnock-Jones  
