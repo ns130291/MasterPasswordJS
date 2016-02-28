@@ -3,7 +3,7 @@ https://masterpasswordapp.com implementation in JavaScript.
 
 Currently it only supports the v1 algorithm.
 
-# License
+## License
 ```
 Copyright (C) 2014,2016 ns130291
  
