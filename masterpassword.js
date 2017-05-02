@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014,2016 ns130291
+ * Copyright (C) 2014,2016,2017 ns130291
  * 
  * This file is part of MasterPasswordJS.
  * 
@@ -12,13 +12,15 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- 
+ *
  * You should have received a copy of the GNU General Public License
  * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
 "use strict";
+
+var cruncher = new Worker("crunch.js");
 
 var passChars_n = "0123456789".split("");
 var passChars_a = "AEIOUaeiouBCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz".split("");
@@ -40,7 +42,11 @@ var templates_maximum = ["anoxxxxxxxxxxxxxxxxx", "axxxxxxxxxxxxxxxxxno"];
 var masterKey = null;
 var masterKeyv3 = null;
 
+var passwordGen;
+
 window.addEventListener('DOMContentLoaded', function () {
+    passwordGen = document.getElementById("password-gen")
+    
     var loginbtn = document.getElementById("login");
     loginbtn.addEventListener('click', login, false);
     var logoutbtn = document.getElementById("logout");
@@ -51,41 +57,27 @@ window.addEventListener('DOMContentLoaded', function () {
     $("#counter").on("change", getPW);
     var pwtype = document.getElementById("pwtype");
     pwtype.addEventListener('change', getPW, false);
+    
+    cruncher.onmessage = function(e){
+        masterKey = e.data.key;
+        masterKeyv3 = e.data.key_v3;        
+        passwordGen.removeAttribute("disabled");
+    }
 }, false);
 
-function login() {
-    var passwordGen = document.getElementById("password-gen");
+function login() {  
+    cruncher.terminate();
     passwordGen.setAttribute("disabled", "disabled");
     document.getElementById("sitename").value = "";
     document.getElementById("sitepw").value = "";
     document.getElementById("sitepw2").value = "";
     document.getElementById("sitepw3").value = "";
 
-    var scrypt = scrypt_module_factory(Math.pow(2, 26));
+    let login = {};
+    login.name = document.getElementById("name").value;
+    login.pw = document.getElementById("pw").value;
     
-    var masterName = document.getElementById("name").value;
-    var masterPW = scrypt.encode_utf8(document.getElementById("pw").value);
-    
-    var N = 32768;
-    var r = 8;
-    var p = 2;
-    var l = 64;
-
-    var masterSalt1 = scrypt.encode_utf8("com.lyndir.masterpassword");
-    var masterSalt2 = intToByteArray(masterName.length);
-    var masterSalt3 = scrypt.encode_utf8(masterName);
-    var masterSalt = Uint8ArrayConcat(Uint8ArrayConcat(masterSalt1, masterSalt2), masterSalt3);
-
-    masterKey = scrypt.crypto_scrypt(masterPW, masterSalt, N, r, p, l);
-    masterKey = scrypt.to_hex(masterKey);
-
-    var masterSalt2v3 = intToByteArray(stringLength(masterName));
-    var masterSaltv3 = Uint8ArrayConcat(Uint8ArrayConcat(masterSalt1, masterSalt2v3), masterSalt3);
-
-    masterKeyv3 = scrypt.crypto_scrypt(masterPW, masterSaltv3, N, r, p, l);
-    masterKeyv3 = scrypt.to_hex(masterKeyv3);
-
-    passwordGen.removeAttribute("disabled");
+    cruncher.postMessage(login);
 }
 
 function stringLength(str) {
@@ -234,15 +226,6 @@ function getI(seed, i) {
     return parseInt(seed.substr(i * 2, 2), 16);
 }
 
-function intToByteArray(intA) {
-    var arr = new Uint8Array(4);
-    for (var i = 3; i >= 0; i--) {
-        arr[i] = intA % 16;
-        intA = intA / 16;
-    }
-    return arr;
-}
-
 function intToHexString(intA) {
     var arr = "";
     for (var i = 0; i < 4; i++) {
@@ -259,11 +242,4 @@ function Uint8arrayToString(array) {
         s += String.fromCharCode(array[i]);
     }
     return s;
-}
-
-function Uint8ArrayConcat(array1, array2) {
-    var array = new Uint8Array(array1.byteLength + array2.byteLength);
-    array.set(new Uint8Array(array1), 0);
-    array.set(new Uint8Array(array2), array1.byteLength);
-    return array;
 }

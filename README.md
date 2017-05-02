@@ -5,7 +5,7 @@ Currently supports the v1, v2 and v3 algorithm for Unicode characters from 0x000
 
 ## License
 ```
-Copyright (C) 2014,2016 ns130291
+Copyright (C) 2014,2016,2017 ns130291
  
 MasterPasswordJS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
