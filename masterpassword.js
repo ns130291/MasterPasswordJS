@@ -65,8 +65,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 }, false);
 
-function login() {  
-    cruncher.terminate();
+function login() {
     passwordGen.setAttribute("disabled", "disabled");
     document.getElementById("sitename").value = "";
     document.getElementById("sitepw").value = "";
