@@ -44,9 +44,22 @@ var masterKeyv3 = null;
 
 var passwordGen;
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').then(function (registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}
+
+
 window.addEventListener('DOMContentLoaded', function () {
     passwordGen = document.getElementById("password-gen")
-    
+
     var loginbtn = document.getElementById("login");
     loginbtn.addEventListener('click', login, false);
     var logoutbtn = document.getElementById("logout");
@@ -57,10 +70,10 @@ window.addEventListener('DOMContentLoaded', function () {
     $("#counter").on("change", getPW);
     var pwtype = document.getElementById("pwtype");
     pwtype.addEventListener('change', getPW, false);
-    
-    cruncher.onmessage = function(e){
+
+    cruncher.onmessage = function (e) {
         masterKey = e.data.key;
-        masterKeyv3 = e.data.key_v3;        
+        masterKeyv3 = e.data.key_v3;
         passwordGen.removeAttribute("disabled");
     }
 }, false);
@@ -75,7 +88,7 @@ function login() {
     let login = {};
     login.name = document.getElementById("name").value;
     login.pw = document.getElementById("pw").value;
-    
+
     cruncher.postMessage(login);
 }
 
@@ -165,7 +178,7 @@ function getPWv3() {
 
     var shaObj = new jsSHA(siteName, "TEXT");
     var siteSeed = shaObj.getHMAC(masterKeyv3, "HEX", "SHA-256", "HEX");
-    
+
     var typepw = document.getElementById("pwtype");
     var type = typepw.options[typepw.selectedIndex].value;
     var templates = getTemplate(type);
