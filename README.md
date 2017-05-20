@@ -1,7 +1,9 @@
 # MasterPasswordJS
 https://masterpasswordapp.com implementation in JavaScript.
 
-Currently supports the v1, v2 and v3 algorithm for Unicode characters from 0x0000 - 0xFFFF.
+Try it [here](https://ns130291.github.io/MasterPasswordJS/).
+
+Currently supports the v1, v2 and v3 algorithm for Unicode characters from `0x0000 - 0xFFFF`.
 
 ## License
 ```
