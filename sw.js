@@ -18,6 +18,8 @@
  * 
  */
 
+"use strict";
+
 var CACHE_NAME = 'masterpassword-cache-v1';
 var urlsToCache = [
     '/MasterPasswordJS/',

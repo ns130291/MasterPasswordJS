@@ -43,6 +43,11 @@ var masterKey = null;
 var masterKeyv3 = null;
 
 var passwordGen;
+var loginForm;
+var generating;
+
+var timeoutTimer;
+var loginTimeout = 300000; // ms --> 5 min
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
@@ -59,6 +64,8 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('DOMContentLoaded', function () {
     passwordGen = document.getElementById("password-gen")
+    loginForm = document.getElementById("login-form");
+    generating = document.getElementById("generating");
 
     var loginbtn = document.getElementById("login");
     loginbtn.addEventListener('click', login, false);
@@ -75,10 +82,18 @@ window.addEventListener('DOMContentLoaded', function () {
         masterKey = e.data.key;
         masterKeyv3 = e.data.key_v3;
         passwordGen.removeAttribute("disabled");
-    }
+        passwordGen.style.display = "block";
+        loginForm.style.display = "none";
+        generating.style.display = "none";
+        startLogoutTimer();
+    };
 }, false);
 
 function login() {
+    passwordGen.style.display = "none";
+    loginForm.style.display = "none";
+    generating.style.display = "block";
+
     passwordGen.setAttribute("disabled", "disabled");
     document.getElementById("sitename").value = "";
     document.getElementById("sitepw").value = "";
@@ -115,12 +130,22 @@ function logout() {
     document.getElementById("pw").value = "";
     masterKey = null;
     masterKeyv3 = null;
+    passwordGen.style.display = "none";
+    loginForm.style.display = "block";
+    generating.style.display = "none";
+}
+
+function startLogoutTimer() {
+    window.clearTimeout(timeoutTimer);
+    timeoutTimer = window.setTimeout(logout, loginTimeout);
 }
 
 function getPW() {
     if (masterKey === null) {
         return;
     }
+
+    startLogoutTimer();
 
     var site = document.getElementById("sitename").value;
     var siteCounter = document.getElementById("counter").value;
