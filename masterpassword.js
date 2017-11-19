@@ -66,11 +66,11 @@ window.addEventListener('DOMContentLoaded', function () {
     passwordGen = document.getElementById("password-gen")
     loginForm = document.getElementById("login-form");
     generating = document.getElementById("generating");
-
-    var loginbtn = document.getElementById("login");
-    loginbtn.addEventListener('click', login, false);
+    
     var logoutbtn = document.getElementById("logout");
     logoutbtn.addEventListener("click", logout, false);
+    var loginformform = document.getElementById("login-form-form");
+    loginformform.addEventListener('submit', login, false);
 
     var sitename = document.getElementById("sitename");
     sitename.addEventListener('input', getPW, false);
@@ -89,7 +89,8 @@ window.addEventListener('DOMContentLoaded', function () {
     };
 }, false);
 
-function login() {
+function login(e) {
+    e.preventDefault();
     passwordGen.style.display = "none";
     loginForm.style.display = "none";
     generating.style.display = "block";
@@ -105,6 +106,7 @@ function login() {
     login.pw = document.getElementById("pw").value;
 
     cruncher.postMessage(login);
+    return false;
 }
 
 function stringLength(str) {
