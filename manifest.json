@@ -1,0 +1,21 @@
+{
+    "short_name": "Masterpassword",
+    "name": "MasterPasswordJS",
+    "description": "Masterpassword algorithm implemented in JavaScript",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "icon/MasterPasswordJS_256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },        
+        {
+            "src": "icon/MasterPasswordJS_512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": ".",
+    "theme_color": "#7e7e7e",
+    "background_color": "white"
+}
