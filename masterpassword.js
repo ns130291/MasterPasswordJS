@@ -33,6 +33,7 @@ var passChars_o = "@&%?,=[]_:-+*$#!'^~;()/.".split("");
 var passChars_x = "AEIOUaeiouBCDFGHJKLMNPQRSTVWXYZbcdfghjklmnpqrstvwxyz0123456789!@#$%^&*()".split("");
 
 var templates_pin = ["nnnn"];
+var templates_pin6 = ["nnnnnn"];
 var templates_short = ["Cvcn"];
 var templates_basic = ["aaanaaan", "aannaaan", "aaannaaa"];
 var templates_medium = ["CvcnoCvc", "CvcCvcno"];
@@ -222,6 +223,8 @@ function getTemplate(type) {
     switch (type) {
         case "pin":
             return templates_pin;
+        case "pin6":
+            return templates_pin6;
         case "short":
             return templates_short;
         case "basic":
