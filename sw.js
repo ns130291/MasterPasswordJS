@@ -20,7 +20,7 @@
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v1';
+var CACHE_NAME = 'masterpassword-cache-v2';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
@@ -48,6 +48,21 @@ self.addEventListener('install', function (event) {
                 return cache.addAll(urlsToCache);
             })
             );
+});
+
+self.addEventListener('activate', function(event) {
+	event.waitUntil(
+	caches.keys().then(function(cacheNames) {
+			return Promise.all(
+				cacheNames.filter(function(cacheName) {
+					// remove old caches
+					return CACHE_NAME !== cacheName;
+				}).map(function(cacheName) {
+					return caches.delete(cacheName);
+				})
+			);
+		})
+	);
 });
 
 self.addEventListener('fetch', function (event) {
