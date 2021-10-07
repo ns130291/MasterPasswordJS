@@ -40,6 +40,8 @@ var urlsToCache = [
 // or do it automatically - see below
 
 self.addEventListener('install', function (event) {
+    // Immediate installation of new service worker
+    self.skipWaiting();
     // Perform install steps
     event.waitUntil(
             caches.open(CACHE_NAME)
