@@ -20,7 +20,7 @@
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v2';
+var CACHE_NAME = 'masterpassword-cache-v3';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
