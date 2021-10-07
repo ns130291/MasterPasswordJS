@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Copyright (C) 2014,2016,2017 ns130291
+Copyright (C) 2014-2021 ns130291
 
 This file is part of MasterPasswordJS.
  
@@ -41,6 +41,11 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
 
             #generating {
                 display: none;
+            }
+
+            .input-group-addon.btn-default {
+                color: #333;
+                background-color: #fff;
             }
         </style>
 
@@ -112,20 +117,35 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="form-group">
                         <label for="sitepw" class="col-sm-4 control-label">Site password v1</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sitepw" name="sitepw" readonly="readonly" autocomplete="off" value="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="sitepw" name="sitepw" readonly="readonly" autocomplete="off" value="">
+                                <span class="input-group-addon btn btn-default copy">
+                                    <span class="glyphicon glyphicon-duplicate"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="sitepw2" class="col-sm-4 control-label">Site password v2</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sitepw2" name="sitepw2" readonly="readonly" autocomplete="off" value="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="sitepw2" name="sitepw2" readonly="readonly" autocomplete="off" value="">
+                                <span class="input-group-addon btn btn-default copy">
+                                    <span class="glyphicon glyphicon-duplicate"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="sitepw3" class="col-sm-4 control-label">Site password v3</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sitepw3" name="sitepw3" readonly="readonly" autocomplete="off" value="">
-                        </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="sitepw3" name="sitepw3" readonly="readonly" autocomplete="off" value="">
+                                <span class="input-group-addon btn btn-default copy">
+                                    <span class="glyphicon glyphicon-duplicate"></span>
+                                </span>
+                            </div>
+                        </div>                        
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-6">

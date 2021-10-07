@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014,2016,2017 ns130291
+ * Copyright (C) 2014-2021 ns130291
  * 
  * This file is part of MasterPasswordJS.
  * 
@@ -67,7 +67,7 @@ window.addEventListener('DOMContentLoaded', function () {
     passwordGen = document.getElementById("password-gen")
     loginForm = document.getElementById("login-form");
     generating = document.getElementById("generating");
-    
+
     var logoutbtn = document.getElementById("logout");
     logoutbtn.addEventListener("click", logout, false);
     var loginformform = document.getElementById("login-form-form");
@@ -78,6 +78,12 @@ window.addEventListener('DOMContentLoaded', function () {
     $("#counter").on("change", getPW);
     var pwtype = document.getElementById("pwtype");
     pwtype.addEventListener('change', getPW, false);
+    document.querySelectorAll(".copy").forEach(el => {
+        el.addEventListener("click", ev => {
+            let pw = findParentByClass(ev.target, "input-group").querySelector(".form-control").value;
+            navigator.clipboard.writeText(pw);
+        });
+    });
 
     cruncher.onmessage = function (e) {
         masterKey = e.data.key;
@@ -89,6 +95,14 @@ window.addEventListener('DOMContentLoaded', function () {
         startLogoutTimer();
     };
 }, false);
+
+function findParentByClass(el, className) {
+    let parent = el;
+    while (!parent.classList.contains(className)) {
+        parent = parent.parentElement;
+    }
+    return parent;
+}
 
 function login(e) {
     e.preventDefault();
@@ -131,6 +145,7 @@ function logout() {
     document.getElementById("sitepw3").value = "";
     document.getElementById("sitename").value = "";
     document.getElementById("pw").value = "";
+    document.getElementById("counter").value = 1;
     masterKey = null;
     masterKeyv3 = null;
     passwordGen.style.display = "none";
@@ -150,7 +165,8 @@ function getPW() {
 
     startLogoutTimer();
 
-    var site = document.getElementById("sitename").value;
+    var site = document.getElementById("sitename").value.trim();
+    document.getElementById("sitename").value = site;
     var siteCounter = document.getElementById("counter").value;
     var siteName = "com.lyndir.masterpassword" + intToHexString(site.length) + site + intToHexString(siteCounter);
 
