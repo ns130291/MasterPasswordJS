@@ -20,7 +20,7 @@
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v5';
+var CACHE_NAME = 'masterpassword-cache-v6';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
@@ -46,7 +46,7 @@ self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function (cache) {
-                console.log('Opened cache');
+                console.log('Opened cache ' + CACHE_NAME);
                 return cache.addAll(urlsToCache);
             })
     );
