@@ -166,7 +166,7 @@ function getPW() {
     startLogoutTimer();
 
     var site = document.getElementById("sitename").value.trim();
-    var url = site.match(/^(\w+:\/\/)?(www\.)?([A-Za-z0-9-\.]+)/);
+    var url = site.match(/^(\w+:\/\/)(www\.)?([A-Za-z0-9-\.]+)/);
     if (url) {
         site = url.pop();
     }

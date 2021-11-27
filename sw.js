@@ -20,7 +20,7 @@
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v6';
+var CACHE_NAME = 'masterpassword-cache-v7';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
@@ -59,7 +59,8 @@ self.addEventListener('activate', function(event) {
 				cacheNames.filter(function(cacheName) {
 					// remove old caches
 					return CACHE_NAME !== cacheName;
-				}).map(function(cacheName) {
+                }).map(function (cacheName) {
+                    console.log('Deleting cache ' + cacheName);
 					return caches.delete(cacheName);
 				})
 			);
