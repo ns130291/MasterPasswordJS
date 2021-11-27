@@ -166,7 +166,10 @@ function getPW() {
     startLogoutTimer();
 
     var site = document.getElementById("sitename").value.trim();
-    site = site.match(/(\w+:\/\/)(www.)?(.+)/).pop();
+    var url = site.match(/^(\w+:\/\/)?(www\.)?([A-Za-z-\.]+)/);
+    if (url) {
+        site = url.pop();
+    }
     document.getElementById("sitename").value = site;
     var siteCounter = document.getElementById("counter").value;
     var siteName = "com.lyndir.masterpassword" + intToHexString(site.length) + site + intToHexString(siteCounter);
