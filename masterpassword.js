@@ -1,13 +1,13 @@
 /*
- * Copyright (C) 2014-2021 ns130291
- * 
+ * Copyright (C) 2014-2023 ns130291
+ *
  * This file is part of MasterPasswordJS.
- * 
+ *
  * MasterPasswordJS is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * MasterPasswordJS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 "use strict";
@@ -166,9 +166,23 @@ function getPW() {
     startLogoutTimer();
 
     var site = document.getElementById("sitename").value.trim();
-    var url = site.match(/^(\w+:\/\/)(www\.)?([A-Za-z0-9-\.]+)/);
+    var url = site.match(/^(\w+:\/\/)(www\.)?((?:[A-Za-z0-9-]+\.)*)([A-Za-z0-9-]+\.[A-Za-z0-9-]+)/);
     if (url) {
         site = url.pop();
+        if (url[3] !== "") {
+            let altSite = document.createElement("span");
+            altSite.classList.add("label");
+            altSite.classList.add("label-default");
+            altSite.dataset.value = url[3] + site;
+            altSite.innerHTML = url[3] + site;
+            altSite.addEventListener("click", (ev) => {
+                let el = ev.target;
+                document.querySelector("#sitename").value = el.dataset.value;
+                el.remove();
+                getPW();
+            });
+            document.querySelector("#alt-site").append(altSite);
+        }
     }
     document.getElementById("sitename").value = site;
     var siteCounter = document.getElementById("counter").value;

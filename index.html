@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <!--
-Copyright (C) 2014-2021 ns130291
+Copyright (C) 2014-2023 ns130291
 
 This file is part of MasterPasswordJS.
- 
+
 MasterPasswordJS is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -46,6 +46,10 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
             .input-group-addon.btn-default {
                 color: #333;
                 background-color: #fff;
+            }
+
+            #alt-site .label:hover {
+                cursor: pointer;
             }
         </style>
 
@@ -92,7 +96,9 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="form-group">
                         <label for="sitename" class="col-sm-4 control-label">Site name</label>
                         <div class="col-sm-6">
-                            <input id="sitename" class="form-control" name="sitename" type="text" autocomplete="off" value=""></div>
+                            <input id="sitename" class="form-control" name="sitename" type="text" autocomplete="off" value="">
+                        </div>
+                        <div class="col-sm-offset-4 col-sm-6" id="alt-site"> </div>
                     </div>
                     <div class="form-group">
                         <label for="counter" class="col-sm-4 control-label">Counter</label>
@@ -100,7 +106,7 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
                             <input id="counter" class="form-control" name="counter" type="text" value="1">
                         </div>
                     </div>
-                    <div class="form-group">                
+                    <div class="form-group">
                         <label for="pwtype" class="col-sm-4 control-label">Password type</label>
                         <div class="col-sm-6">
                             <select id="pwtype" class="form-control" name="pwtype">
@@ -114,6 +120,7 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
                             </select>
                         </div>
                     </div>
+                    <div class="form-group"></div>
                     <div class="form-group">
                         <label for="sitepw" class="col-sm-4 control-label">Site password v1</label>
                         <div class="col-sm-6">
@@ -145,8 +152,9 @@ along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
                                     <span class="glyphicon glyphicon-duplicate"></span>
                                 </span>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
+                    <div class="form-group"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-6">
                             <div id="logout" class="btn btn-danger">Logout</div>

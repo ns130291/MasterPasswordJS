@@ -1,13 +1,13 @@
 /*
- * Copyright (C) 2014,2016,2017 ns130291
- * 
+ * Copyright (C) 2014-2023 ns130291
+ *
  * This file is part of MasterPasswordJS.
- * 
+ *
  * MasterPasswordJS is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * MasterPasswordJS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,12 +15,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v7';
+var CACHE_NAME = 'masterpassword-cache-v8';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
@@ -70,7 +70,7 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-            caches.match(event.request)
+        caches.match(event.request)
             .then(function (response) {
                 // Cache hit - return response
                 if (response) {
@@ -105,7 +105,7 @@ self.addEventListener('fetch', function (event) {
                         }
                 );
             })
-            );
+    );
 });
 
 
