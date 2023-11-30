@@ -167,6 +167,7 @@ function getPW() {
 
     var site = document.getElementById("sitename").value.trim();
     var url = site.match(/^(\w+:\/\/)(www\.)?((?:[A-Za-z0-9-]+\.)*)([A-Za-z0-9-]+\.[A-Za-z0-9-]+)/);
+    document.querySelector("#alt-site").replaceChildren();
     if (url) {
         site = url.pop();
         if (url[3] !== "") {
