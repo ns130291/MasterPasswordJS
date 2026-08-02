@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2026 ns130291
+
+This file is part of MasterPasswordJS.
+
+MasterPasswordJS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MasterPasswordJS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>MasterPasswordJS</title>
+        <link rel="stylesheet" href="ui.css">
+    </head>
+    <body class="popup">
+        <header>
+            <h1>MasterPasswordJS</h1>
+            <button type="button" id="lock" class="linkish" hidden>Lock</button>
+        </header>
+
+        <p id="message" class="message" hidden></p>
+
+        <!-- unlock -->
+        <section id="unlock-view" hidden>
+            <form id="unlock-form">
+                <label for="identity">Name</label>
+                <input type="text" id="identity" autocomplete="off" spellcheck="false">
+
+                <label for="master">Master password</label>
+                <input type="password" id="master" autocomplete="off">
+
+                <button type="submit" class="primary" id="unlock-button">Unlock</button>
+            </form>
+            <p id="deriving" class="hint" hidden>Generating keys…</p>
+        </section>
+
+        <!-- site -->
+        <section id="site-view" hidden>
+            <p class="scope">Settings for <b id="site-key"></b></p>
+
+            <label for="site">Domain used for the password</label>
+            <input type="text" id="site" autocomplete="off" spellcheck="false">
+            <div id="alternatives" class="chips"></div>
+            <p id="site-differs" class="hint" hidden></p>
+
+            <div class="row">
+                <div>
+                    <label for="type">Password type</label>
+                    <select id="type"></select>
+                </div>
+                <div class="narrow">
+                    <label for="counter">Counter</label>
+                    <input type="number" id="counter" min="1" step="1" value="1">
+                </div>
+                <div class="narrow">
+                    <label for="version">Algorithm</label>
+                    <select id="version">
+                        <option value="1">v1</option>
+                        <option value="2">v2</option>
+                        <option value="3">v3</option>
+                    </select>
+                </div>
+            </div>
+
+            <fieldset class="toggles">
+                <label><input type="checkbox" id="spec-compliant"> Official Master
+                    Password encoding</label>
+            </fieldset>
+            <p class="hint">Only makes a difference when your name or the domain
+                above is 16 characters or longer. Turn it on to match the official
+                Master Password apps, off to match this add-on's web app. Changing
+                it changes the password.</p>
+
+            <label for="username">User name to fill <span class="optional">(optional)</span></label>
+            <input type="text" id="username" autocomplete="off" spellcheck="false">
+
+            <label for="password">Site password</label>
+            <div class="password-row">
+                <input type="password" id="password" readonly>
+                <button type="button" id="reveal" title="Show password">Show</button>
+                <button type="button" id="copy" title="Copy to clipboard">Copy</button>
+            </div>
+
+            <fieldset class="toggles">
+                <label><input type="checkbox" id="autofill"> Fill automatically when the page loads</label>
+                <label><input type="checkbox" id="autosubmit"> Submit the form after filling</label>
+                <label><input type="checkbox" id="hide-dropdown"> Hide Firefox's own password dropdown here</label>
+            </fieldset>
+
+            <div class="actions">
+                <button type="button" class="primary" id="fill">Fill login</button>
+                <button type="button" id="save">Save site</button>
+                <button type="button" id="forget" hidden>Forget site</button>
+            </div>
+            <p id="inherited" class="hint" hidden></p>
+        </section>
+
+        <!-- unsupported page -->
+        <section id="unsupported-view" hidden>
+            <p class="hint" id="unsupported-hint">This page has no web address that a
+                site password can be derived from. Open a normal http(s) page.</p>
+            <button type="button" class="primary" id="grant" hidden>Grant access to
+                websites</button>
+        </section>
+
+        <footer>
+            <button type="button" class="linkish" id="options">All settings…</button>
+        </footer>
+
+        <!-- Passwords are generated in the background script, which is the only
+             place that touches the master keys. -->
+        <script src="mpw.js"></script>
+        <script src="popup.js"></script>
+    </body>
+</html>

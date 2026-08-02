@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2026 ns130291
+
+This file is part of MasterPasswordJS.
+
+MasterPasswordJS is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+MasterPasswordJS is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>MasterPasswordJS settings</title>
+        <link rel="stylesheet" href="ui.css">
+        <link rel="stylesheet" href="options.css">
+    </head>
+    <body class="options">
+        <header>
+            <h1>MasterPasswordJS</h1>
+        </header>
+
+        <p id="message" class="message" hidden></p>
+
+        <p id="permission-warning" class="message error" hidden>
+            MasterPasswordJS may not access web pages yet, so it cannot offer or
+            fill logins.
+            <button type="button" id="grant">Grant access to websites</button>
+        </p>
+
+        <h2>General</h2>
+        <p class="hint">Changes on this page are saved as you make them.</p>
+
+        <label for="identity">Name</label>
+        <input type="text" id="identity" autocomplete="off" spellcheck="false">
+        <p class="hint">Your Master Password user name. It is remembered so you only
+            have to type the master password itself.</p>
+
+        <label for="lock-timeout">Lock automatically after (minutes, 0 = never)</label>
+        <input type="number" id="lock-timeout" min="0" step="1">
+
+        <fieldset class="toggles">
+            <label><input type="checkbox" id="show-button"> Show the MasterPasswordJS
+                button inside password fields</label>
+        </fieldset>
+
+        <h2>Defaults for new sites</h2>
+        <div class="row">
+            <div>
+                <label for="default-type">Password type</label>
+                <select id="default-type"></select>
+            </div>
+            <div class="narrow">
+                <label for="default-counter">Counter</label>
+                <input type="number" id="default-counter" min="1" step="1">
+            </div>
+            <div class="narrow">
+                <label for="default-version">Algorithm</label>
+                <select id="default-version">
+                    <option value="1">v1</option>
+                    <option value="2">v2</option>
+                    <option value="3">v3</option>
+                </select>
+            </div>
+        </div>
+        <fieldset class="toggles">
+            <label><input type="checkbox" id="default-spec-compliant"> Use the
+                official Master Password encoding</label>
+            <label><input type="checkbox" id="default-autofill"> Fill automatically
+                when the page loads</label>
+            <label><input type="checkbox" id="default-autosubmit"> Submit the form
+                after filling</label>
+            <label><input type="checkbox" id="default-hide-dropdown"> Hide Firefox's
+                own password dropdown on configured sites</label>
+        </fieldset>
+        <p class="hint">The official encoding only makes a difference when your name
+            or a domain is 16 characters or longer; it is off by default so that
+            passwords match the ones the web app produces.</p>
+        <p class="hint">Firefox's saved passwords keep working everywhere else. Only
+            sites listed below are touched at all.</p>
+
+        <h2>Saved sites</h2>
+        <div id="sites"></div>
+
+        <h2>Backup</h2>
+        <p class="hint">Site settings contain no secrets — no master password or
+            derived key is ever stored on disk.</p>
+        <div class="actions">
+            <button type="button" id="export">Export settings…</button>
+            <button type="button" id="import">Import settings…</button>
+            <input type="file" id="import-file" accept="application/json,.json" hidden>
+        </div>
+
+        <script src="mpw.js"></script>
+        <script src="store.js"></script>
+        <script src="options.js"></script>
+    </body>
+</html>

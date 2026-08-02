@@ -5,6 +5,14 @@ Try it [here](https://ns130291.github.io/MasterPasswordJS/).
 
 Currently supports the v1, v2 and v3 algorithm for Unicode characters from `0x0000 - 0xFFFF`.
 
+## Firefox extension
+
+`extension/` contains a Firefox add-on that logs you in with the generated
+password and remembers password type, counter, algorithm version and user name
+per site. It shares the algorithm with the web app, so both produce the same
+passwords. See [extension/README.md](extension/README.md) for installation and
+details.
+
 ## License
 ```
 Copyright (C) 2014,2016,2017 ns130291

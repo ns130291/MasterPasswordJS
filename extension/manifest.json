@@ -1,0 +1,73 @@
+{
+    "manifest_version": 3,
+    "name": "MasterPasswordJS",
+    "version": "1.0.0",
+    "description": "Log in with passwords derived from your master password, with per-site settings for password type, counter and algorithm version.",
+    "homepage_url": "https://github.com/ns130291/MasterPasswordJS",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "masterpasswordjs@ns130291.github.io",
+            "strict_min_version": "115.0",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        }
+    },
+
+    "permissions": [
+        "storage",
+        "alarms",
+        "clipboardWrite"
+    ],
+
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+    "background": {
+        "scripts": [
+            "vendor/sha256.js",
+            "src/mpw.js",
+            "src/store.js",
+            "src/background.js"
+        ]
+    },
+
+    "action": {
+        "default_title": "MasterPasswordJS",
+        "default_popup": "src/popup.html",
+        "default_icon": {
+            "256": "icons/MasterPasswordJS_256.png",
+            "512": "icons/MasterPasswordJS_512.png"
+        }
+    },
+
+    "options_ui": {
+        "page": "src/options.html",
+        "open_in_tab": true
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["src/content.js"],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+
+    "commands": {
+        "fill-login": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+L"
+            },
+            "description": "Fill the login on the current page"
+        }
+    },
+
+    "icons": {
+        "256": "icons/MasterPasswordJS_256.png",
+        "512": "icons/MasterPasswordJS_512.png"
+    }
+}

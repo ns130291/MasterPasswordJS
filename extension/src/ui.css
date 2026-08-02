@@ -1,0 +1,287 @@
+/*
+ * Copyright (C) 2026 ns130291
+ *
+ * This file is part of MasterPasswordJS.
+ *
+ * MasterPasswordJS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MasterPasswordJS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+:root {
+    --bg: #ffffff;
+    --fg: #1c1c1e;
+    --muted: #6b6b70;
+    --border: #cfcfd4;
+    --field: #ffffff;
+    --accent: #3a6ea5;
+    --accent-fg: #ffffff;
+    --danger: #a12d2d;
+    --chip: #eceef1;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #23242a;
+        --fg: #ececf0;
+        --muted: #a2a2ab;
+        --border: #4a4c55;
+        --field: #2c2e35;
+        --accent: #5b8fd0;
+        --accent-fg: #10131a;
+        --danger: #e08585;
+        --chip: #34363e;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 12px;
+    background: var(--bg);
+    color: var(--fg);
+    font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body.popup {
+    width: 340px;
+}
+
+body.options {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+h2 {
+    margin: 22px 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+}
+
+label {
+    display: block;
+    margin: 10px 0 3px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.optional {
+    font-style: italic;
+}
+
+input[type=text],
+input[type=password],
+input[type=number],
+select {
+    width: 100%;
+    padding: 5px 7px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--field);
+    color: var(--fg);
+    font: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+button {
+    padding: 6px 11px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--chip);
+    color: var(--fg);
+    font: inherit;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(0.95);
+}
+
+button.primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-fg);
+}
+
+button.danger {
+    color: var(--danger);
+}
+
+button.linkish {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.row {
+    display: flex;
+    gap: 8px;
+}
+
+.row > div {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.row > div.narrow {
+    flex: 0 0 78px;
+}
+
+.password-row {
+    display: flex;
+    gap: 6px;
+}
+
+.password-row input {
+    flex: 1 1 auto;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 5px;
+}
+
+.chips button {
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.toggles {
+    margin: 12px 0 0;
+    padding: 0;
+    border: 0;
+}
+
+.toggles label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 5px 0;
+    color: var(--fg);
+    font-size: 12px;
+}
+
+.toggles input {
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+}
+
+.actions button {
+    flex: 1 1 auto;
+}
+
+.hint {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.scope {
+    margin: 0 0 4px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.scope b {
+    color: var(--fg);
+    word-break: break-all;
+}
+
+.message {
+    margin: 0 0 10px;
+    padding: 7px 9px;
+    border-radius: 5px;
+    background: var(--chip);
+    font-size: 12px;
+}
+
+.message.error {
+    color: var(--danger);
+}
+
+footer {
+    margin-top: 14px;
+    padding-top: 9px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+}
+
+form button[type=submit] {
+    margin-top: 14px;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+th, td {
+    padding: 5px 7px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+td.right {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.empty {
+    padding: 14px 0;
+    color: var(--muted);
+}

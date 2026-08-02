@@ -1,0 +1,53 @@
+/*
+ * Copyright (C) 2026 ns130291
+ *
+ * This file is part of MasterPasswordJS.
+ *
+ * MasterPasswordJS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * MasterPasswordJS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MasterPasswordJS.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+.site-card {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--field);
+}
+
+.site-card > header {
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.site-card .domain {
+    font-weight: 600;
+    word-break: break-all;
+}
+
+.site-card label {
+    margin-top: 6px;
+}
+
+.site-card .toggles label {
+    margin: 3px 0;
+}
+
+.site-card .row {
+    align-items: flex-end;
+}
+
+#permission-warning button {
+    margin-left: 8px;
+}
