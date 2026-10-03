@@ -20,7 +20,7 @@
 
 "use strict";
 
-var CACHE_NAME = 'masterpassword-cache-v10';
+var CACHE_NAME = 'masterpassword-cache-v11';
 var urlsToCache = [
     '/MasterPasswordJS/',
     'index.html',
@@ -47,7 +47,10 @@ self.addEventListener('install', function (event) {
         caches.open(CACHE_NAME)
             .then(function (cache) {
                 console.log('Opened cache ' + CACHE_NAME);
-                return cache.addAll(urlsToCache);
+                // bypass the HTTP cache, otherwise stale files may end up in the new cache
+                return cache.addAll(urlsToCache.map(function (url) {
+                    return new Request(url, {cache: 'reload'});
+                }));
             })
     );
 });
@@ -64,6 +67,9 @@ self.addEventListener('activate', function(event) {
 					return caches.delete(cacheName);
 				})
 			);
+		}).then(function () {
+			// take control of already open pages
+			return self.clients.claim();
 		})
 	);
 });

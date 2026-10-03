@@ -55,12 +55,37 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').then(function (registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            // installed apps may stay open for a long time, check for updates when resumed
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'visible') {
+                    registration.update().catch(function () {
+                        // offline, try again next time
+                    });
+                }
+            });
         }, function (err) {
             // registration failed :(
             console.log('ServiceWorker registration failed: ', err);
         });
     });
+
+    // reload when a new service worker takes over, so the page runs the new version
+    // (not on first install, and not while logged in - then reload after logout)
+    var hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (!hadController) {
+            hadController = true;
+            return;
+        }
+        if (masterKey === null && masterKeyv3 === null) {
+            window.location.reload();
+        } else {
+            reloadOnLogout = true;
+        }
+    });
 }
+
+var reloadOnLogout = false;
 
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -151,6 +176,9 @@ function logout() {
     passwordGen.style.display = "none";
     loginForm.style.display = "block";
     generating.style.display = "none";
+    if (reloadOnLogout) {
+        window.location.reload();
+    }
 }
 
 function startLogoutTimer() {
