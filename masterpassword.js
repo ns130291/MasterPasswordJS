@@ -137,6 +137,7 @@ function login(e) {
 
     passwordGen.setAttribute("disabled", "disabled");
     document.getElementById("sitename").value = "";
+    document.querySelector("#alt-site").replaceChildren();
     document.getElementById("sitepw").value = "";
     document.getElementById("sitepw2").value = "";
     document.getElementById("sitepw3").value = "";
@@ -169,6 +170,7 @@ function logout() {
     document.getElementById("sitepw2").value = "";
     document.getElementById("sitepw3").value = "";
     document.getElementById("sitename").value = "";
+    document.querySelector("#alt-site").replaceChildren();
     document.getElementById("pw").value = "";
     document.getElementById("counter").value = 1;
     masterKey = null;
@@ -212,8 +214,10 @@ function getPW() {
             });
             document.querySelector("#alt-site").append(altSite);
         }
+        // only rewrite the field when a URL was reduced to its domain, otherwise
+        // trailing spaces vanish while typing and the caret jumps to the end
+        document.getElementById("sitename").value = site;
     }
-    document.getElementById("sitename").value = site;
     var siteCounter = document.getElementById("counter").value;
     var siteName = "com.lyndir.masterpassword" + intToHexString(site.length) + site + intToHexString(siteCounter);
 
@@ -230,15 +234,14 @@ function getPW() {
         sitePW += passChars[getI(siteSeed, i + 1) % passChars.length];
     }
     document.getElementById("sitepw").value = sitePW;
-    getPWv2();
+    getPWv2(site);
 }
 
-function getPWv2() {
+function getPWv2(site) {
     if (masterKey === null) {
         return;
     }
 
-    var site = document.getElementById("sitename").value;
     var siteCounter = document.getElementById("counter").value;
     var siteName = "com.lyndir.masterpassword" + intToHexString(stringLength(site)) + site + intToHexString(siteCounter);
 
@@ -255,15 +258,14 @@ function getPWv2() {
         sitePW += passChars[getI(siteSeed, i + 1) % passChars.length];
     }
     document.getElementById("sitepw2").value = sitePW;
-    getPWv3();
+    getPWv3(site);
 }
 
-function getPWv3() {
+function getPWv3(site) {
     if (masterKeyv3 === null) {
         return;
     }
 
-    var site = document.getElementById("sitename").value;
     var siteCounter = document.getElementById("counter").value;
     var siteName = "com.lyndir.masterpassword" + intToHexString(stringLength(site)) + site + intToHexString(siteCounter);
 
